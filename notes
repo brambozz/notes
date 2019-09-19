@@ -1,9 +1,39 @@
 #!/bin/sh
 
+# Function definitions #################################################
+
+usage()
+{
+  echo "Usage: notes [OPTION]...
+
+  -c		Compile notes
+  -e [date] 	Edit note in $EDITOR
+  -r [date]	Read note in $PAGER
+
+  Default: notes -e 
+  Note that date defaults to today
+  "
+  exit 2
+}
+
+set_variable()
+{
+  local varname=$1
+  shift
+  if [ -z "${!varname}" ]; then
+    eval "$varname=\"$@\""
+  else
+    echo "Error: $varname already set"
+    usage
+  fi
+}
+
+initialize()
+{
 # Check if XDG_CONFIG_HOME is set
 if [ -z $XDG_CONFIG_HOME ]
 then
-	echo xdgnotset!
+	echo "Warning: XDG_CONFIG_HOME is not set. Assuming $HOME/.config"
 	XDG_CONFIG_HOME=$HOME/.config
 fi
 
@@ -17,8 +47,12 @@ then
 	echo "Creating $notesdir"
 	mkdir $notesdir
 fi
+}
 
-## Edit note of current day
+edit_note()
+{
+initialize
+
 today=`date +%Y%m%d`
 notefile=$notesdir/$today
 
@@ -30,3 +64,36 @@ else
 	touch $notefile
 	$EDITOR $notefile
 fi
+exit 0
+}
+
+#TODO
+read_note()
+{
+	echo "reading a note"
+	exit 0
+}
+
+#TODO
+compile()
+{
+	echo "compiling notes"
+	exit 0
+}
+
+# Main script ##########################################################
+
+# Parse input
+
+while getopts 'cerh' c
+do
+	case $c in
+		c) compile ;;
+		e) edit_note ;;
+		r) read_note ;;
+		h) usage ;;
+	esac
+done
+
+# If no arguments are passed, assume `notes -e`
+edit_note
