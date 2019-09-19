@@ -60,18 +60,30 @@ notefile=$notesdir/$today
 if [ -f $notefile ]
 then
 	$EDITOR $notefile
+	exit 0
 else
 	touch $notefile
 	$EDITOR $notefile
+	exit 0
 fi
-exit 0
 }
 
-#TODO
 read_note()
 {
-	echo "reading a note"
+initialize
+
+today=`date +%Y%m%d`
+notefile=$notesdir/$today
+
+# Check if note already exists
+if [ -f $notefile ]
+then
+	$PAGER $notefile
 	exit 0
+else
+	echo "Error: note $notefile does not exist"
+	exit 1
+fi
 }
 
 #TODO
