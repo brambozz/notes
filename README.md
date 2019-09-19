@@ -5,7 +5,7 @@ A simple note taking shell script.
 ## Installation
 
 1. Clone this repository
-2. `chmod a+rx notes.sh`
+2. `chmod a+rx notes`
 3. Symlink to e.g. `/usr/local/bin/notes`
 
 ## Intended basic use
