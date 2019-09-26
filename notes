@@ -87,11 +87,41 @@ else
 fi
 }
 
+generate_header()
+{
+stripped_date=`basename $1 $extension`
+header="# Date: $stripped_date"
+}
+
 #TODO
 compile()
 {
-	echo "compiling notes"
-	exit 0
+initialize
+
+# Create compile file
+compfile=/tmp/compilenotes$extension
+if [ -f $compfile ]
+then
+	rm $compfile
+fi
+touch $compfile
+
+# Loop through notes and add to compfile
+for filename in $notesdir/*
+do
+	generate_header $filename
+	echo "" >> $compfile
+	echo $header >> $compfile
+	echo "" >> $compfile
+	cat $filename >> $compfile
+done
+
+# Compile
+outfile=$HOME/notes.pdf
+pandoc -o $HOME/notes.pdf $compfile
+
+echo "Compiled notes to $outfile" 
+exit 0
 }
 
 # Main script ##########################################################
