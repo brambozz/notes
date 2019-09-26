@@ -38,7 +38,8 @@ initialize()
 #fi
 
 # Definitions
-notesdir=$HOME/notes
+notesdir=$HOME/.notes
+extension=".md"
 
 # Check if notes directory exists
 if [ ! -d $notesdir ]
@@ -54,7 +55,7 @@ edit_note()
 initialize
 
 today=`date +%Y%m%d`
-notefile=$notesdir/$today
+notefile=$notesdir/$today$extension
 
 # Check if note already exists
 if [ -f $notefile ]
@@ -73,7 +74,7 @@ read_note()
 initialize
 
 today=`date +%Y%m%d`
-notefile=$notesdir/$today
+notefile=$notesdir/$today$extension
 
 # Check if note already exists
 if [ -f $notefile ]
