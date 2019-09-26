@@ -30,15 +30,15 @@ set_variable()
 
 initialize()
 {
-# Check if XDG_CONFIG_HOME is set
-if [ -z $XDG_CONFIG_HOME ]
-then
-	echo "Warning: XDG_CONFIG_HOME is not set. Assuming $HOME/.config"
-	XDG_CONFIG_HOME=$HOME/.config
-fi
+# Check if XDG_CONFIG_HOME is set (may use for configuration in future)
+#if [ -z $XDG_CONFIG_HOME ]
+#then
+#	echo "Warning: XDG_CONFIG_HOME is not set. Assuming $HOME/.config"
+#	XDG_CONFIG_HOME=$HOME/.config
+#fi
 
 # Definitions
-notesdir=$XDG_CONFIG_HOME/notes
+notesdir=$HOME/notes
 
 # Check if notes directory exists
 if [ ! -d $notesdir ]
